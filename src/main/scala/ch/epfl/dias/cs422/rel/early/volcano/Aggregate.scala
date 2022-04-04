@@ -1,11 +1,9 @@
 package ch.epfl.dias.cs422.rel.early.volcano
 
 import ch.epfl.dias.cs422.helpers.builder.skeleton
-import ch.epfl.dias.cs422.helpers.rel.RelOperator.Tuple
+import ch.epfl.dias.cs422.helpers.rel.RelOperator.{Elem, NilTuple, Tuple}
 import ch.epfl.dias.cs422.helpers.rex.AggregateCall
 import org.apache.calcite.util.ImmutableBitSet
-
-import scala.jdk.CollectionConverters._
 
 /**
   * @inheritdoc
@@ -20,6 +18,7 @@ class Aggregate protected (
       ch.epfl.dias.cs422.helpers.rel.early.volcano.Operator
     ](input, groupSet, aggCalls)
     with ch.epfl.dias.cs422.helpers.rel.early.volcano.Operator {
+
   /**
     * Hint 1: See superclass documentation for semantics of groupSet and aggCalls
     * Hint 2: You do not need to implement each aggregate function yourself.
@@ -31,15 +30,42 @@ class Aggregate protected (
   /**
     * @inheritdoc
     */
-  override def open(): Unit = ???
+  private var data: IndexedSeq[Tuple] = IndexedSeq()
+  private var grouped: List[(Tuple, IndexedSeq[Tuple])] = List()
+
+  override def open(): Unit = {
+    data = input.toIndexedSeq
+    if (data.isEmpty && groupSet.isEmpty) {
+      grouped = Map(
+        IndexedSeq[Elem]() -> IndexedSeq(aggCalls.map(_.emptyValue))
+      ).toList
+    } else {
+      grouped = data
+        .groupBy(tuple => groupSet.toArray.toIndexedSeq.map(tuple(_)))
+        .toList
+    }
+  }
 
   /**
     * @inheritdoc
     */
-  override def next(): Option[Tuple] = ???
+  override def next(): Option[Tuple] =
+    grouped match {
+      case (key: Tuple, tuples: IndexedSeq[Tuple]) :: tail =>
+        grouped = tail
+        Some(
+          key ++
+            aggCalls.map(agg =>
+              tuples
+                .map(e => agg.getArgument(e))
+                .reduce((e1, e2) => agg.reduce(e1, e2))
+            )
+        )
+      case _ => NilTuple
+    }
 
   /**
     * @inheritdoc
     */
-  override def close(): Unit = ???
+  override def close(): Unit = {}
 }

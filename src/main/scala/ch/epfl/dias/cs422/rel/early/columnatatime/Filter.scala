@@ -35,5 +35,13 @@ class Filter protected (
   /**
     * @inheritdoc
     */
-  def execute(): IndexedSeq[HomogeneousColumn] = ???
+  def execute(): IndexedSeq[HomogeneousColumn] = {
+    val inputs: IndexedSeq[HomogeneousColumn] = input.execute()
+    val predicated: HomogeneousColumn = toHomogeneousColumn(
+      unwrap[Boolean](inputs.last)
+        .zip(mappredicate(inputs.dropRight(1)))
+        .map(t => t._1 && t._2)
+    )
+    inputs.dropRight(1) :+ predicated
+  }
 }

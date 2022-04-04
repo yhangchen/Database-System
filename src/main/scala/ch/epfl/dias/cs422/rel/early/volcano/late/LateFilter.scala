@@ -1,7 +1,7 @@
 package ch.epfl.dias.cs422.rel.early.volcano.late
 
 import ch.epfl.dias.cs422.helpers.builder.skeleton
-import ch.epfl.dias.cs422.helpers.rel.RelOperator.{LateTuple, Tuple}
+import ch.epfl.dias.cs422.helpers.rel.RelOperator.{LateTuple, NilLateTuple, Tuple}
 import org.apache.calcite.rex.RexNode
 
 /**
@@ -10,12 +10,12 @@ import org.apache.calcite.rex.RexNode
   * @see [[ch.epfl.dias.cs422.helpers.rel.late.volcano.naive.Operator]]
   */
 class LateFilter protected (
-                            input: ch.epfl.dias.cs422.helpers.rel.late.volcano.naive.Operator,
-                            condition: RexNode
-                          ) extends skeleton.Filter[
-  ch.epfl.dias.cs422.helpers.rel.late.volcano.naive.Operator
-](input, condition)
-  with ch.epfl.dias.cs422.helpers.rel.late.volcano.naive.Operator {
+    input: ch.epfl.dias.cs422.helpers.rel.late.volcano.naive.Operator,
+    condition: RexNode
+) extends skeleton.Filter[
+      ch.epfl.dias.cs422.helpers.rel.late.volcano.naive.Operator
+    ](input, condition)
+    with ch.epfl.dias.cs422.helpers.rel.late.volcano.naive.Operator {
 
   /**
     * Function that, evaluates the predicate [[condition]]
@@ -29,15 +29,19 @@ class LateFilter protected (
   /**
     * @inheritdoc
     */
-  override def open(): Unit = ???
+  override def open(): Unit = input.open()
 
   /**
     * @inheritdoc
     */
-  override def next(): Option[LateTuple] = ???
+  override def next(): Option[LateTuple] =
+    input.next() match {
+      case Some(x: LateTuple) => if (predicate(x.value)) Some(x) else next()
+      case _                  => NilLateTuple
+    }
 
   /**
     * @inheritdoc
     */
-  override def close(): Unit = ???
+  override def close(): Unit = input.close()
 }

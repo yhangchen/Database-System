@@ -27,7 +27,16 @@ class Filter protected (
   }
 
   /**
-   * @inheritdoc
-   */
-  def execute(): IndexedSeq[Column] = ???
+    * @inheritdoc
+    */
+  def execute(): IndexedSeq[Column] = {
+    val inputs: IndexedSeq[Column] = input.execute()
+    val predicated: Column =
+      inputs.last
+        .map(_.asInstanceOf[Boolean])
+        .zip(inputs.dropRight(1).transpose.map(predicate))
+        .map(t => t._1 && t._2)
+        .asInstanceOf[Column]
+    inputs.dropRight(1) :+ predicated
+  }
 }

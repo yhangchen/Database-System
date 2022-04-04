@@ -1,11 +1,9 @@
 package ch.epfl.dias.cs422.rel.early.operatoratatime
 
 import ch.epfl.dias.cs422.helpers.builder.skeleton
-import ch.epfl.dias.cs422.helpers.rel.RelOperator.Column
+import ch.epfl.dias.cs422.helpers.rel.RelOperator.{Column, Tuple}
 import ch.epfl.dias.cs422.helpers.rex.AggregateCall
 import org.apache.calcite.util.ImmutableBitSet
-
-import scala.jdk.CollectionConverters._
 
 /**
   * @inheritdoc
@@ -20,6 +18,7 @@ class Aggregate protected (
       ch.epfl.dias.cs422.helpers.rel.early.operatoratatime.Operator
     ](input, groupSet, aggCalls)
     with ch.epfl.dias.cs422.helpers.rel.early.operatoratatime.Operator {
+
   /**
     * Hint 1: See superclass documentation for semantics of groupSet and aggCalls
     * Hint 2: You do not need to implement each aggregate function yourself.
@@ -29,7 +28,29 @@ class Aggregate protected (
     */
 
   /**
-   * @inheritdoc
-   */
-  override def execute(): IndexedSeq[Column] = ???
+    * @inheritdoc
+    */
+  override def execute(): IndexedSeq[Column] = {
+    val data: IndexedSeq[Tuple] =
+      input.execute().transpose.filter(_.last.asInstanceOf[Boolean])
+    if (data.isEmpty && groupSet.isEmpty) {
+      IndexedSeq(aggCalls.map(_.emptyValue) :+ true).transpose
+    } else {
+      val groupInd: IndexedSeq[Int] = groupSet.toArray.toIndexedSeq
+      data
+        .groupBy(tuple => groupInd.map(tuple(_)))
+        .map {
+          case (key, tuples) =>
+            key.++(
+              aggCalls.map(agg =>
+                tuples
+                  .map(e => agg.getArgument(e))
+                  .reduce((e1, e2) => agg.reduce(e1, e2))
+              )
+            ) :+ true
+        }
+        .toIndexedSeq
+        .transpose
+    }
+  }
 }

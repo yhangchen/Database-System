@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id="project-1-solution" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="SBT" type="JAVA_MODULE" version="4">
+<module external.linked.project.id="project-1-yihchen [file:/C:/Users/DELL/IdeaProjects/Project-1-yihchen/]" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="SBT" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_15">
     <output url="file://$MODULE_DIR$/../../target/scala-2.13/classes" />
     <output-test url="file://$MODULE_DIR$/../../target/scala-2.13/test-classes" />
@@ -12,5 +12,71 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="sbt: au.com.bytecode:opencsv:2.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: ch.epfl.dias.cs422:base_2.13:2022.1.0:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: ch.epfl.dias.cs422:base_2.13:2022.1.0:tests:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.esri.geometry:esri-geometry-api:2.2.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.fasterxml.jackson.core:jackson-annotations:2.10.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.fasterxml.jackson.core:jackson-core:2.10.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.fasterxml.jackson.core:jackson-databind:2.10.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.10.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.code.findbugs:jsr305:3.0.2:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.errorprone:error_prone_annotations:2.3.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.guava:failureaccess:1.0.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.guava:guava:29.0-jre:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.j2objc:j2objc-annotations:1.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.protobuf:protobuf-java:3.6.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.uzaygezen:uzaygezen-core:0.2:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.jayway.jsonpath:json-path:2.4.0:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: com.novocode:junit-interface:0.11:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.yahoo.datasketches:memory:0.9.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.yahoo.datasketches:sketches-core:0.9.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: commons-codec:commons-codec:1.12:jar" level="project" />
+    <orderEntry type="library" name="sbt: commons-io:commons-io:2.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: commons-lang:commons-lang:2.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: commons-logging:commons-logging:1.2:jar" level="project" />
+    <orderEntry type="library" name="sbt: javax.servlet:javax.servlet-api:4.0.1:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: junit:junit:4.11:jar" level="project" />
+    <orderEntry type="library" name="sbt: log4j:log4j:1.2.17:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: net.aichler:jupiter-interface:0.8.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: net.hydromatic:aggdesigner-algorithm:6.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: net.minidev:accessors-smart:1.2:jar" level="project" />
+    <orderEntry type="library" name="sbt: net.minidev:json-smart:2.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.apache.calcite.avatica:avatica-core:1.17.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.apache.calcite.avatica:avatica-metrics:1.17.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.apache.calcite.avatica:avatica-server:1.17.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.apache.calcite:calcite-core:1.26.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.apache.calcite:calcite-linq4j:1.26.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.apache.calcite:calcite-server:1.26.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.apache.commons:commons-dbcp2:2.6.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.apache.commons:commons-lang3:3.8:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.apache.commons:commons-pool2:2.6.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.apache.httpcomponents:httpclient:4.5.9:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.apache.httpcomponents:httpcore:4.4.11:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.apiguardian:apiguardian-api:1.1.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.checkerframework:checker-qual:2.11.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.codehaus.janino:commons-compiler:3.0.11:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.codehaus.janino:janino:3.0.11:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.eclipse.jetty:jetty-http:9.4.15.v20190215:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.eclipse.jetty:jetty-io:9.4.15.v20190215:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.eclipse.jetty:jetty-security:9.4.15.v20190215:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.eclipse.jetty:jetty-server:9.4.15.v20190215:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.eclipse.jetty:jetty-util:9.4.15.v20190215:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.hamcrest:hamcrest-core:1.3:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.junit.jupiter:junit-jupiter-api:5.3.1:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.junit.jupiter:junit-jupiter-engine:5.1.1:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.junit.jupiter:junit-jupiter-params:5.3.1:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.junit.platform:junit-platform-commons:1.3.1:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.junit.platform:junit-platform-engine:1.1.1:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.junit.platform:junit-platform-launcher:1.1.1:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.opentest4j:opentest4j:1.1.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.ow2.asm:asm:5.0.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang:scala-library:2.13.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang:scala-reflect:2.13.4:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scala-sbt:test-interface:1.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.slf4j:slf4j-api:1.7.25:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.slf4j:slf4j-log4j12:1.7.25:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.yaml:snakeyaml:1.24:jar" level="project" />
   </component>
 </module>

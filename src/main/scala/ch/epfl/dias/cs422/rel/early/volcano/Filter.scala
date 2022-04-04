@@ -1,7 +1,7 @@
 package ch.epfl.dias.cs422.rel.early.volcano
 
 import ch.epfl.dias.cs422.helpers.builder.skeleton
-import ch.epfl.dias.cs422.helpers.rel.RelOperator.Tuple
+import ch.epfl.dias.cs422.helpers.rel.RelOperator.{NilTuple, Tuple}
 import org.apache.calcite.rex.RexNode
 
 /**
@@ -29,15 +29,19 @@ class Filter protected (
   /**
     * @inheritdoc
     */
-  override def open(): Unit = ???
+  override def open(): Unit = input.open()
 
   /**
     * @inheritdoc
     */
-  override def next(): Option[Tuple] = ???
+  override def next(): Option[Tuple] =
+    input.next() match {
+      case Some(x: Tuple) => if (predicate(x)) Some(x) else next()
+      case _              => NilTuple
+    }
 
   /**
     * @inheritdoc
     */
-  override def close(): Unit = ???
+  override def close(): Unit = input.close()
 }

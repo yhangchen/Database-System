@@ -1,11 +1,12 @@
 package ch.epfl.dias.cs422.rel.early.volcano.late.qo
 
-import ch.epfl.dias.cs422.helpers.builder.skeleton.logical.LogicalStitch
+import ch.epfl.dias.cs422.helpers.builder.skeleton.logical.{LogicalFetch, LogicalStitch}
 import ch.epfl.dias.cs422.helpers.qo.rules.skeleton.LazyFetchFilterRuleSkeleton
 import ch.epfl.dias.cs422.helpers.store.late.rel.late.volcano.LateColumnScan
 import org.apache.calcite.plan.{RelOptRuleCall, RelRule}
 import org.apache.calcite.rel.RelNode
 import org.apache.calcite.rel.logical.LogicalFilter
+import org.apache.calcite.rex.{RexNode, RexUtil}
 
 /**
   * RelRule (optimization rule) that finds a reconstruct operator that
@@ -17,11 +18,30 @@ import org.apache.calcite.rel.logical.LogicalFilter
   * @param config configuration parameters of the optimization rule
   */
 class LazyFetchFilterRule protected (config: RelRule.Config)
-  extends LazyFetchFilterRuleSkeleton(
-    config
-  ) {
+    extends LazyFetchFilterRuleSkeleton(
+      config
+    ) {
 
-  override def onMatchHelper(call: RelOptRuleCall): RelNode = ???
+  override def onMatchHelper(call: RelOptRuleCall): RelNode = {
+    val node: RelNode = call.rel(1)
+    val filter: LogicalFilter = call.rel(2)
+    val scan: LateColumnScan = call.rel(3)
+
+    val fetch: LogicalFetch = LogicalFetch.create(
+      node,
+      scan.getRowType,
+      scan.getColumn,
+      None,
+      classOf[LogicalFetch]
+    )
+
+    val newCond: RexNode = RexUtil.shift(
+      filter.getCondition,
+      node.getRowType.getFieldCount
+    )
+
+    filter.copy(filter.getTraitSet, fetch, newCond)
+  }
 }
 
 object LazyFetchFilterRule {
@@ -32,7 +52,7 @@ object LazyFetchFilterRule {
   val INSTANCE = new LazyFetchFilterRule(
     // By default, get an empty configuration
     RelRule.Config.EMPTY
-      // and match:
+    // and match:
       .withOperandSupplier((b: RelRule.OperandBuilder) =>
         // A node of class classOf[LogicalStitch]
         b.operand(classOf[LogicalStitch])
@@ -47,10 +67,9 @@ object LazyFetchFilterRule {
               // A node that is a LateColumnScan
               b2.operand(classOf[LogicalFilter])
                 // of any inputs
-                .oneInput(
-                  b3 =>
-                    b3.operand(classOf[LateColumnScan])
-                      .anyInputs()
+                .oneInput(b3 =>
+                  b3.operand(classOf[LateColumnScan])
+                    .anyInputs()
                 )
           )
       )
