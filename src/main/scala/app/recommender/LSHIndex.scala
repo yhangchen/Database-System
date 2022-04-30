@@ -29,7 +29,8 @@ class LSHIndex(data: RDD[(Int, String, List[String])], seed : IndexedSeq[Int]) e
    * @return Data structure of LSH index
    */
   def getBuckets()
-    : RDD[(IndexedSeq[Int], List[(Int, String, List[String])])] = ???
+  : RDD[(IndexedSeq[Int], List[(Int, String, List[String])])] =
+    data.groupBy(t => minhash.hash(t._3)).map(t => (t._1, t._2.toList)).persist()
 
   /**
    * Lookup operation on the LSH index
@@ -40,5 +41,8 @@ class LSHIndex(data: RDD[(Int, String, List[String])], seed : IndexedSeq[Int]) e
    *         If no match exists in the LSH index, return an empty result list.
    */
   def lookup[T: ClassTag](queries: RDD[(IndexedSeq[Int], T)])
-  : RDD[(IndexedSeq[Int], T, List[(Int, String, List[String])])] = ???
+  : RDD[(IndexedSeq[Int], T, List[(Int, String, List[String])])] = {
+    val buck:Map[IndexedSeq[Int], List[(Int, String, List[String])]] = this.getBuckets().collect().toMap
+    queries.map(q => (q._1, q._2, buck.getOrElse(q._1, List[(Int, String, List[String])]())))
+  }
 }
